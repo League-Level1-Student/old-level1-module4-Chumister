@@ -4,6 +4,8 @@
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,16 +13,22 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
 
 /* 1. Download the JavaZoom jar from here: http://bit.ly/javazoom
+ * 
  * 2. Right click your project and add it as an External JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
-
+public class Jukebox implements Runnable, ActionListener {
+	JButton Station1 = new JButton();
+	JButton Station2 = new JButton();
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
 	}
@@ -28,10 +36,9 @@ public class Jukebox implements Runnable {
            public void run() {
 
 		// 3. Find an mp3 on your computer or on the Internet.
+        	   
 		// 4. Create a Song
-
 		// 5. Play the Song
-
 		/*
 		 * 6. Create a user interface for your Jukebox so that the user can to
 		 * choose which song to play. You can use can use a different button for
@@ -39,12 +46,42 @@ public class Jukebox implements Runnable {
 		 * cover is clicked, stop the currently playing song, and play the one
 		 * that was selected.
 		 */
-          }
+JPanel Music = new JPanel();
+JLabel Radio = new JLabel();
+JFrame frame = new JFrame();
+Music.add(Radio);
+Music.add(Station1);
+Music.add(Station2);
+frame.add(Music);
+frame.setVisible(true);
+Station1.addActionListener(this);
+Station2.addActionListener(this);
+           }
 	/* Use this method to add album covers to your Panel. */
 	private JLabel loadImage(String fileName) {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Song electricguitar= new Song("electricguitar.mp3");
+		Song ferambie = new Song("ferambie.mp3");
+
+		if ((JButton)e.getSource() == Station1) {
+			
+			ferambie.stop();
+			electricguitar.stop();
+			electricguitar.play();
+			
+}
+		else if ((JButton)e.getSource()==Station2) {
+			ferambie.stop();
+			electricguitar.stop();
+			ferambie.play();
+		}
 	}
 
 }

@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -24,11 +25,11 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	 * When the user clicks on a secret place, stuff will happen.
 	 * 
 	 * 1. Make the frame respond to mouse clicks.
-	 * 
 	 * 2. When the mouse is clicked, use the Media Palace (read the code in the default package) to play sounds, show images or speak.
 	 * 
 	 * 3. backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY()) will give you the color of the current pixel.
 	 */
+
 
 	BufferedImage backgroundImage;
 
@@ -41,6 +42,7 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 
 	@Override
 	public void run() {
+
 		try {
 			loadBackgroundImage();
 			createUI();
@@ -52,6 +54,9 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	private void createUI() {
 		JFrame frame = new JFrame("The Magic Box contains many secrets...");
 		frame.add(this);
+		frame.addMouseListener(this);
+		MediaPalace P=new MediaPalace();
+		
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,7 +80,17 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("hi");
+		MediaPalace M = new MediaPalace();
+		M.playMusicOnComputer("ferambie.mp3");
+		try {
+			M.loadImageFromTheInternet("https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&h=650&w=940");
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			
+			e1.printStackTrace();
+			
+		}
 	}
 
 	@Override
